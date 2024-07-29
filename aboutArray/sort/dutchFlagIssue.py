@@ -1,14 +1,14 @@
 #  荷兰国旗问题
 #  给定一个数组和一个数 要求用O(N)的时间复杂度 和 O(1)的额外时间复杂度 将大于该数的放到数组的右边 小于该数的放到数组的左边
 
-def partition_array(arr, num):
+def partition_array(arr, number):
     left = 0
     right = len(arr) - 1
 
     while left <= right:
-        while left <= right and arr[left] < num:
+        while left <= right and arr[left] < number:
             left += 1
-        while left <= right and arr[right] >= num:
+        while left <= right and arr[right] >= number:
             right -= 1
         if left < right:
             arr[left], arr[right] = arr[right], arr[left]

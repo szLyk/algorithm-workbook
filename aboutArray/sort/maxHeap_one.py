@@ -6,6 +6,7 @@ import math
 # 堆序属性：对于任意节点i（除了叶子节点），都有heap[i] ≥ heap[2*i+1] 和 heap[i] ≥ heap[2*i+2]，其中2*i+1和2*i+2分别是i的左孩子和右孩子的索引。
 
 # 测试
+# 数组已知
 one_array = [5, 1, 4, 6, 4, 2, 3, 9, 1]
 
 
@@ -22,7 +23,7 @@ def max_heap(some_array):
     length = len(some_array)
 
     # 从最后一个非叶子节点开始
-    for i in range(math.floor((length - 2) / 2), -1, -1):
+    for i in range(math.floor((length - 2) // 2), -1, -1):
         heapify_down(some_array, i, length)
 
     return some_array
