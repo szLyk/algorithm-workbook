@@ -26,10 +26,8 @@ def generate_almost_sorted_array(length, k):
 
 def sort_almost_sorted(arr, k):
     # 初始化一个小顶堆，包含数组的前 k+1 个元素
-    print(arr)
     heap = arr[:k + 1]
     heapq.heapify(heap)
-    print(heap)
 
     # 初始化已排序部分
     sorted_arr = []
