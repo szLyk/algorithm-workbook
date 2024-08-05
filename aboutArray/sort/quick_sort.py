@@ -19,21 +19,18 @@ def quick_sort(arr):
 
 
 #  优解
-def partition(arr, low, high):
-    # 随机选择一个元素作为基准
-    pivot_index = random.randint(low, high)
-    arr[pivot_index], arr[high] = arr[high], arr[pivot_index]  # 将基准元素移动到数组末尾
+def partition2(arr, low, high, pivot_index):
+    pivot = arr[pivot_index]
+    arr[pivot_index], arr[high] = arr[high], arr[pivot_index]
 
-    pivot = arr[high]
-    i = low - 1
+    index = low - 1
+    for i in range(low, high):
+        if arr[i] < pivot:
+            index += 1
+            arr[index], arr[i] = arr[i], arr[index]
 
-    for j in range(low, high):
-        if arr[j] <= pivot:
-            i += 1
-            arr[i], arr[j] = arr[j], arr[i]
-
-    arr[i + 1], arr[high] = arr[high], arr[i + 1]
-    return i + 1
+    arr[index + 1], arr[high] = arr[high], arr[index + 1]
+    return index + 1
 
 
 def quick_sort_inplace(arr, low=0, high=None):
@@ -41,14 +38,17 @@ def quick_sort_inplace(arr, low=0, high=None):
         high = len(arr) - 1
 
     if low < high:
-        pi = partition(arr, low, high)
+        pivot_index = random.randint(low, high)
+        pivot_position = partition2(arr, low, high, pivot_index)
+        quick_sort_inplace(arr, low, pivot_position - 1)
+        quick_sort_inplace(arr, pivot_position + 1, high)
 
-        quick_sort_inplace(arr, low, pi - 1)
-        quick_sort_inplace(arr, pi + 1, high)
+    return arr
 
 
+#  [5, 1, 4, 6, 4, 2, 3, 9, 1]
 # 测试
-one_array = [5, 1, 4, 6, 4, 2, 3, 9, 1]
+one_array = [5, 1, 4, 6, 4, 1, 2]
 sorted_array = quick_sort(one_array)
 print(sorted_array)  # 输出 [1, 1, 2, 3, 4, 4, 5, 6, 9]
 # quick_sort2(one_array, 0, len(one_array) - 1)
