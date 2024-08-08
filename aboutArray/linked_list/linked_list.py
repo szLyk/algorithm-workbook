@@ -57,16 +57,12 @@ ll = LinkedList()
 ll.append(1)
 ll.append(2)
 ll.append(3)
-ll.print_list()  # 输出: 1 -> 2 -> 3 -> None
+# ll.print_list()  # 输出: 1 -> 2 -> 3 -> None
 
 ll.prepend(0)
-ll.print_list()  # 输出: 0 -> 1 -> 2 -> 3 -> None
+# ll.print_list()  # 输出: 0 -> 1 -> 2 -> 3 -> None
 
 ll.delete_with_value(2)
-ll.print_list()  # 输出: 0 -> 1 -> 3 -> None
+# ll.print_list()  # 输出: 0 -> 1 -> 3 -> None
 
 node = ll.find(1)
-if node:
-    print(f"Found: {node.data}")
-else:
-    print("Not found")
