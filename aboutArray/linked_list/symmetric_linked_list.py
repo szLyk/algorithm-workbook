@@ -24,6 +24,13 @@ def reverse_linked_list(head):
     return prev
 
 
+def print_linked_list(node):
+    while node:
+        print(str(node.data), end=" => ")
+        node = node.next
+    print("None")
+
+
 def check_symmetric_linked_list(some_list):
     if some_list.head is None:
         return True
@@ -51,7 +58,7 @@ def check_symmetric_linked_list(some_list):
         second_half_head = second_half_head.next
 
     # 恢复链表原始结构
-    reverse_linked_list(copy_second_half_head)
+    copy_second_half_head = reverse_linked_list(copy_second_half_head)
 
     return is_symmetric
 
