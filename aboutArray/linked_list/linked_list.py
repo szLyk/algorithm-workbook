@@ -3,6 +3,13 @@ class Node:
         self.data = data
         self.next = None
 
+    def print_list(self):
+        current = self
+        while current:
+            print(current.data, end=" -> ")
+            current = current.next
+        print("None")
+
 
 class LinkedList:
     def __init__(self):
