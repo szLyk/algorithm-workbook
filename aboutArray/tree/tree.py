@@ -64,8 +64,22 @@ def print_inorder_non_recursive(root):
 
     return result
 
-def print_subsequent_non_recursive(root):
 
+def print_subsequent_non_recursive(root):
+    if not root:
+        return []
+
+    stack = []
+    result = []
+    current = root
+    while stack or current:
+        if current:
+            stack.append(current)
+            current = current.left
+        else:
+            current = stack.pop()
+            result.append(current.value)
+            current = current.right
 
 
 ooe_node = TreeNode(1)
