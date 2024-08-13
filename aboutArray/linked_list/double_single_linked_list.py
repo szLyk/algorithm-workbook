@@ -46,7 +46,7 @@ def judge_linked_list_intersected(first_head, second_head):
     first_circular = circular_list.get_circular_linked_list_node(first_head)
     second_circular = circular_list.get_circular_linked_list_node(second_head)
 
-    if first_circular and second_circular:
+    if not first_circular and not second_circular:
 
         #  先算两个表的长度
         long_head = first_head
@@ -58,7 +58,7 @@ def judge_linked_list_intersected(first_head, second_head):
 
         while second_head:
             n -= 1
-            first_head = first_head.next
+            second_head = second_head.next
 
         if n < 0:
             long_head = second_head
@@ -78,9 +78,21 @@ def judge_linked_list_intersected(first_head, second_head):
         if long_head == short_head and (long_head and short_head):
             return True
         else:
+            return False
 
-
-        print(n)
+    elif first_circular and second_circular:
+        if first_circular == second_circular:
+            return True
+        else:
+            tmp_node = first_circular
+            first_circular = first_circular.next
+            while first_circular != tmp_node:
+                if first_circular == second_circular:
+                    return True
+                else:
+                    first_circular = first_circular.next
+    else:
+        return False
 
 
 judge_linked_list_intersected(one_head, two_head)

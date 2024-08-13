@@ -24,11 +24,11 @@ def get_circular_linked_list_node(current):
     fast = current.next.next
     slow = current.next
 
-    while (fast and slow) and fast != slow:
+    while (fast and slow) and fast != slow and fast.next:
         fast = fast.next.next
         slow = slow.next
 
-    if not fast or not slow:
+    if not fast or not slow or not fast.next:
         return None
 
     fast = current
