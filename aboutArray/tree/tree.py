@@ -50,17 +50,22 @@ def print_inorder_non_recursive(root):
     if not root:
         return []
 
-    result = []
     stack = []
-    current = root
-    while current or stack:
-        if current:
-            stack.append(current)
-            current = current.left
-        else:
-            current = stack.pop()
-            result.append(current.value)
-            current = current.right
+    current_node = root
+    result = []
+
+    while stack or current_node:
+        # 一直深入左子树
+        while current_node:
+            stack.append(current_node)
+            current_node = current_node.left
+
+        # 处理节点
+        current_node = stack.pop()
+        result.append(current_node.value)
+
+        # 进入右子树
+        current_node = current_node.right
 
     return result
 
@@ -69,17 +74,20 @@ def print_subsequent_non_recursive(root):
     if not root:
         return []
 
-    stack = []
-    result = []
-    current = root
-    while stack or current:
-        if current:
-            stack.append(current)
-            current = current.left
-        else:
-            current = stack.pop()
-            result.append(current.value)
-            current = current.right
+    stack = [root]
+    output = []
+
+    while stack:
+        current_node = stack.pop()
+        output.insert(0,current_node.value)
+
+        # 先将左子节点压入栈，然后右子节点压入栈
+        if current_node.left:
+            stack.append(current_node.left)
+        if current_node.right:
+            stack.append(current_node.right)
+
+    return output
 
 
 ooe_node = TreeNode(1)
@@ -98,4 +106,4 @@ three_node.right = seven_node
 
 # print_inorder(ooe_node)
 # print(print_preamble_non_recursive(ooe_node))
-print(print_inorder_non_recursive(ooe_node))
+print(print_subsequent_non_recursive(ooe_node))
