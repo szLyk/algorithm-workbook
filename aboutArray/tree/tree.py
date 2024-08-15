@@ -79,7 +79,7 @@ def print_subsequent_non_recursive(root):
 
     while stack:
         current_node = stack.pop()
-        output.insert(0,current_node.value)
+        output.insert(0, current_node.value)
 
         # 先将左子节点压入栈，然后右子节点压入栈
         if current_node.left:
