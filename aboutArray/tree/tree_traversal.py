@@ -1,3 +1,6 @@
+from collections import deque
+
+
 class TreeNode:
     def __init__(self, value):
         self.value = value
@@ -72,14 +75,15 @@ def print_inorder_non_recursive(root):
 
 def print_subsequent_non_recursive(root):
     if not root:
-        return []
+        return
 
     stack = [root]
     output = []
+    result = []
 
     while stack:
         current_node = stack.pop()
-        output.insert(0, current_node.value)
+        output.append(current_node.value)
 
         # 先将左子节点压入栈，然后右子节点压入栈
         if current_node.left:
@@ -87,7 +91,30 @@ def print_subsequent_non_recursive(root):
         if current_node.right:
             stack.append(current_node.right)
 
-    return output
+    # 由于后序遍历是先处理子节点再处理根节点，因此需要反转结果
+    while output:
+        result.append(output.pop())
+
+    return result
+
+
+#  宽度遍历
+def print_width_traversal(root):
+    if not root:
+        return []
+
+    queue = deque([root])
+    result = []
+
+    while queue:
+        current = queue.popleft()
+        result.append(current.value)
+        if current.left:
+            queue.append(current.left)
+        if current.right:
+            queue.append(current.right)
+
+    return result
 
 
 ooe_node = TreeNode(1)
