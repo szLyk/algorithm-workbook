@@ -1,4 +1,6 @@
 # 二叉树层数节点计算
+from collections import deque
+
 import tree_traversal
 
 ooe_node = tree_traversal.TreeNode(1)
@@ -16,3 +18,25 @@ three_node.left = six_node
 three_node.right = seven_node
 
 
+def max_nodes_per_level(root):
+    if not root:
+        return 0
+
+    queue = deque([root])
+    max_count = 0
+    current_count = 0
+    level_count = 0
+
+    while queue:
+        current_count = len(queue)  # 当前层的节点数
+        for _ in range(current_count):
+            current = queue.popleft()
+            if current.left:
+                queue.append(current.left)
+            if current.right:
+                queue.append(current.right)
+
+        max_count = max(max_count, current_count)
+        level_count += 1
+
+    return max_count
