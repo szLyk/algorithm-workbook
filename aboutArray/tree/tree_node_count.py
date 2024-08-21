@@ -18,6 +18,7 @@ three_node.left = six_node
 three_node.right = seven_node
 
 
+# 计算当前最大节点数
 def max_nodes_per_level(root):
     if not root:
         return 0
