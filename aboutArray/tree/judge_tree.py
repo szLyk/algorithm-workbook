@@ -1,4 +1,5 @@
 import tree_traversal as tree
+import math
 
 ooe_node = tree.TreeNode(4)
 two_node = tree.TreeNode(2)
@@ -44,4 +45,26 @@ def check_if_bst(root):
     return True
 
 
-print(check_if_bst(ooe_node))
+# 判断是否为搜索二叉树 用递归的形式
+
+
+def check_if_bst_recursive(node, min_val=-math.inf, max_val=math.inf):
+    # 如果当前节点为空，返回True
+    if node is None:
+        return True
+
+    # 如果当前节点不在[min_val, max_val]区间内，返回False
+    if not (min_val < node.value < max_val):
+        return False
+
+    # 递归检查左子树，更新上界为当前节点的值
+    is_left_bst = check_if_bst_recursive(node.left, min_val, node.value)
+
+    # 递归检查右子树，更新下界为当前节点的值
+    is_right_bst = check_if_bst_recursive(node.right, node.value, max_val)
+
+    # 当前节点的左右子树都满足条件时，才是BST
+    return is_left_bst and is_right_bst
+
+
+print(check_if_bst_recursive(ooe_node))
