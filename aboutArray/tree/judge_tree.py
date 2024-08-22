@@ -75,26 +75,26 @@ def if_complete_binary_tree(root):
         return True
 
     queue = deque([root])
-    encountered_empty = False  # 标志是否遇到空节点
+    missing_child_detected = False
 
     while queue:
         current = queue.popleft()
 
-        # 左子树
+        # 检查左子节点
         if current.left:
-            if encountered_empty:
+            if missing_child_detected:
                 return False
             queue.append(current.left)
         else:
-            encountered_empty = True
+            missing_child_detected = True
 
-        # 右子树
+        # 检查右子节点
         if current.right:
-            if encountered_empty:
+            if missing_child_detected:
                 return False
             queue.append(current.right)
         else:
-            encountered_empty = True
+            missing_child_detected = True
 
     return True
 
