@@ -136,13 +136,13 @@ def check_if_full_binary_tree(root):
     return True
 
 
+#  是否为平衡二叉树
 def get_depth(node):
     if not node:
         return 0
 
     left_depth = get_depth(node.left)
     right_depth = get_depth(node.right)
-
     return max(left_depth, right_depth) + 1
 
 
