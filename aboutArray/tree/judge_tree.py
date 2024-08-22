@@ -159,4 +159,21 @@ def is_balanced(root):
     return is_balanced(root.left) and is_balanced(root.right)
 
 
-print(is_balanced(ooe_node))
+# 找出两个节点的相同根节点
+def find_common_node(head, node1, node2):
+    if head is None:
+        return None
+
+    if node1 == head or node2 == head:
+        return head
+
+    left = find_common_node(head.left, node1, node2)
+    right = find_common_node(head.right, node1, node2)
+
+    if left and right:
+        return head
+
+    return left or right
+
+
+print(find_common_node(ooe_node, two_node, six_node).value)
