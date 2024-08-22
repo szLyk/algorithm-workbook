@@ -2,19 +2,19 @@ import tree_traversal as tree
 import math
 from collections import deque
 
-ooe_node = tree.TreeNode(5)
-two_node = tree.TreeNode(3)
-three_node = tree.TreeNode(7)
-four_node = tree.TreeNode(2)
-five_node = tree.TreeNode(4)
-six_node = tree.TreeNode(6)
+ooe_node = tree.TreeNode(4)
+two_node = tree.TreeNode(2)
+three_node = tree.TreeNode(6)
+four_node = tree.TreeNode(1)
+five_node = tree.TreeNode(3)
+six_node = tree.TreeNode(5)
 seven_node = tree.TreeNode(7)
 ooe_node.left = two_node
 ooe_node.right = three_node
 two_node.left = four_node
 two_node.right = five_node
 three_node.left = six_node
-four_node.left = seven_node
+three_node.right = seven_node
 
 
 # 判断是否为搜索二叉树
@@ -99,4 +99,64 @@ def if_complete_binary_tree(root):
     return True
 
 
-print(if_complete_binary_tree(ooe_node))
+# 用递归的方法判断是否为满二叉树
+def if_full_binary_tree(root):
+    if not root:
+        return True
+
+    if not root.left and not root.right:
+        return True
+
+    if root.left and root.right:
+        return if_full_binary_tree(root.right) and if_full_binary_tree(root.left)
+
+    return False
+
+
+# 判断二叉树是否为满二叉树
+def check_if_full_binary_tree(root):
+    if not root:
+        return True
+
+    queue = deque([root])
+
+    while queue:
+        current = queue.popleft()
+
+        # 满二叉树中，节点要么没有子节点，要么有两个子节点
+        if (current.left and not current.right) or (not current.left and current.right):
+            return False
+
+        # 添加左右子节点到队列中
+        if current.left:
+            queue.append(current.left)
+        if current.right:
+            queue.append(current.right)
+
+    return True
+
+
+def get_depth(node):
+    if not node:
+        return 0
+
+    left_depth = get_depth(node.left)
+    right_depth = get_depth(node.right)
+
+    return max(left_depth, right_depth) + 1
+
+
+def is_balanced(root):
+    if not root:
+        return True
+
+    left_depth = get_depth(root.left)
+    right_depth = get_depth(root.right)
+
+    if abs(left_depth - right_depth) > 1:
+        return False
+
+    return is_balanced(root.left) and is_balanced(root.right)
+
+
+print(is_balanced(ooe_node))
