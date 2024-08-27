@@ -32,10 +32,27 @@ import create_graph as graph
 # 复杂度：
 # 时间复杂度为 O(E log V)，E 是边的数量，V 是顶点的数量。
 
+
 def prim(some_graph):
     nodes = some_graph.nodes
     one_node = next(iter(nodes.values()))
+    stack = [one_node]
+    visited = set()
+    result = []
 
+    while stack:
+        current = stack.pop()
+        visited.add(current)
+        result.append(current)
+        edges = current.edges
+        # 自定义排序函数
+        sorted_edge = sorted(edges, key=lambda e: e.weight, reverse=True)
+        while sorted_edge:
+            to_node = sorted_edge.pop().to_node
+            if to_node not in visited:
+                stack.append(to_node)
+                break
+    return result
 
 
 # Dijkstra算法：适用于加权图，可以有效计算单源点到所有其他顶点的最短路径，但不支持负权重的边。
@@ -53,10 +70,13 @@ node_matrix = [
     ['C', 'F', 50],
     ['D', 'B', 5],
     ['D', 'C', 25],
+    ['D', 'E', 55],
     ['E', 'F', 35],
 ]
 
 # 创建图
 one_graph = graph.create_undirected_graph(node_matrix)
 graph.print_edges(one_graph)
-prim(one_graph)
+result = prim(one_graph)
+while result:
+    print(result.pop().value)

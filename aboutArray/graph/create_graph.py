@@ -1,4 +1,6 @@
+
 class Node:
+
     def __init__(self, value):
         self.value = value
         self.inside = 0
@@ -11,6 +13,9 @@ class Node:
 
     def add_edges(self, edge):
         self.edges.append(edge)
+
+    def get_edges(self):
+        return self.edges
 
 
 class Edge:
@@ -75,7 +80,8 @@ def create_undirected_graph(matrix):
         node_to = graph.nodes[to_node_value]
 
         # 创建边
-        new_edge = Edge(weight, node_from, node_to)
+        new_from_edge = Edge(weight, node_from, node_to)
+        new_to_edge = Edge(weight, node_to, node_from)
 
         # 添加单向连接（双向图）
         node_from.add_nexts(node_to)
@@ -88,11 +94,12 @@ def create_undirected_graph(matrix):
         node_to.inside += 1
 
         # 添加边到每个节点
-        node_from.add_edges(new_edge)
-        node_to.add_edges(new_edge)
+        node_from.add_edges(new_from_edge)
+        node_to.add_edges(new_to_edge)
 
         # 添加边到图
-        graph.edges.add(new_edge)
+        graph.edges.add(new_from_edge)
+        graph.edges.add(new_to_edge)
 
     return graph
 
