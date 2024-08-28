@@ -46,6 +46,7 @@ def prim(some_graph):
 
     # 将与初始节点相关的所有边加入小根堆
     for edge in start_node.edges:
+        # 当权重一样时 会进行第二个参数的比较 需要对象也有比较的函数 不然就会报错
         heapq.heappush(min_heap, (edge.weight, edge))
 
     # Prim 算法的核心
@@ -95,3 +96,4 @@ result = prim(one_graph)
 while result:
     edge = result.pop()
     print("{} -> {}".format(edge.from_node.value, edge.to_node.value))
+

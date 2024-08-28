@@ -1,4 +1,3 @@
-
 class Node:
 
     def __init__(self, value):
@@ -24,6 +23,14 @@ class Edge:
         self.weight = weight
         self.from_node = from_node
         self.to_node = to_node
+
+    # 在您提供的代码中，heapq.heappush() 接收的是一个元组 (next_edge.weight, next_edge)。这里的关键是元组的第一个元素 next_edge.weight
+    # 是一个数值类型（如整数或浮点数），是可以进行比较的。然而，当您尝试将整个元组加入堆时， Python 默认会首先比较元组的第一个元素（即边的权重），如果第一个元素相同，则会继续比较元组的第二个元素（即 Edge 对象）。
+    # 问题出现在元组的第二个元素上，即 Edge 对象。默认情况下，Edge 类型的对象之间是没有定义如何进行比较的。因此，当第一个元素（权重）相等时，Python 试图比较 Edge 对象本身，这就触发了
+    # TypeError，因为 Python 不知道如何比较两个 Edge 实例。 为了解决这个问题，我们已经在 Edge 类中实现了 __lt__ 方法来定义如何比较两个 Edge 实例。这样，即使权重相同，Python
+    # 也知道如何确定哪个 Edge 实例应该排在前面。
+    def __lt__(self, other):
+        return self.weight < other.weight
 
 
 class Graph:
@@ -93,14 +100,13 @@ def create_undirected_graph(matrix):
         node_to.inside += 1
 
         # 添加边到每个节点（无向边）
-        node_from.add_edges(new_edge)
-        node_to.add_edges(new_edge)
+        node_from.add_edges(Edge(weight, node_from, node_to))
+        node_to.add_edges(Edge(weight, node_to, node_from))
 
         # 添加边到图
         graph.edges.add(new_edge)
 
     return graph
-
 
 
 def print_nodes(graph):
