@@ -79,29 +79,28 @@ def create_undirected_graph(matrix):
         node_from = graph.nodes[from_node_value]
         node_to = graph.nodes[to_node_value]
 
-        # 创建边
-        new_from_edge = Edge(weight, node_from, node_to)
-        new_to_edge = Edge(weight, node_to, node_from)
+        # 创建无向边
+        new_edge = Edge(weight, node_from, node_to)
 
-        # 添加单向连接（双向图）
+        # 添加节点间的连接（无向图：相互连接）
         node_from.add_nexts(node_to)
         node_to.add_nexts(node_from)
 
-        # 增加入度和出度
+        # 增加每个节点的入度和出度
         node_from.outside += 1
         node_to.outside += 1
         node_from.inside += 1
         node_to.inside += 1
 
-        # 添加边到每个节点
-        node_from.add_edges(new_from_edge)
-        node_to.add_edges(new_to_edge)
+        # 添加边到每个节点（无向边）
+        node_from.add_edges(new_edge)
+        node_to.add_edges(new_edge)
 
         # 添加边到图
-        graph.edges.add(new_from_edge)
-        graph.edges.add(new_to_edge)
+        graph.edges.add(new_edge)
 
     return graph
+
 
 
 def print_nodes(graph):

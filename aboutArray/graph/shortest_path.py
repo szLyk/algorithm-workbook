@@ -40,7 +40,6 @@ def prim(some_graph):
     min_heap = []
     result = []
 
-
     # 选择一个初始节点
     start_node = next(iter(some_graph.nodes.values()))
     visited.add(start_node)
@@ -92,4 +91,7 @@ node_matrix = [
 # 创建图
 one_graph = graph.create_undirected_graph(node_matrix)
 
-prim(one_graph)
+result = prim(one_graph)
+while result:
+    edge = result.pop()
+    print("{} -> {}".format(edge.from_node.value, edge.to_node.value))
