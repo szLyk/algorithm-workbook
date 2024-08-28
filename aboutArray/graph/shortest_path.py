@@ -1,3 +1,5 @@
+from scipy._lib._disjoint_set import DisjointSet
+
 import create_graph as graph
 import heapq
 
@@ -19,6 +21,7 @@ import heapq
 # 易于实现，且能通过并查集提高效率。
 # 复杂度：
 # 时间复杂度为 O(E log E)，E 是边的数量。
+# 并查集（Disjoint Set Union - DSU）
 
 
 # Prim算法 (P算法)
@@ -92,8 +95,7 @@ node_matrix = [
 # 创建图
 one_graph = graph.create_undirected_graph(node_matrix)
 
-result = prim(one_graph)
+result = kruskal(one_graph)
 while result:
     edge = result.pop()
     print("{} -> {}".format(edge.from_node.value, edge.to_node.value))
-
