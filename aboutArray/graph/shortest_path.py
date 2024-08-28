@@ -1,4 +1,5 @@
 import create_graph as graph
+import heapq
 
 
 # 图的最短路径问题
@@ -34,24 +35,38 @@ import create_graph as graph
 
 
 def prim(some_graph):
-    nodes = some_graph.nodes
-    one_node = next(iter(nodes.values()))
-    stack = [one_node]
+    # 初始化
     visited = set()
+    min_heap = []
     result = []
 
-    while stack:
-        current = stack.pop()
-        visited.add(current)
-        result.append(current)
-        edges = current.edges
-        # 自定义排序函数
-        sorted_edge = sorted(edges, key=lambda e: e.weight, reverse=True)
-        while sorted_edge:
-            to_node = sorted_edge.pop().to_node
-            if to_node not in visited:
-                stack.append(to_node)
-                break
+
+    # 选择一个初始节点
+    start_node = next(iter(some_graph.nodes.values()))
+    visited.add(start_node)
+
+    # 将与初始节点相关的所有边加入小根堆
+    for edge in start_node.edges:
+        heapq.heappush(min_heap, (edge.weight, edge))
+
+    # Prim 算法的核心
+    while min_heap:
+        # 取出权值最小的边
+        weight, edge = heapq.heappop(min_heap)
+
+        # 如果该边的终点已经访问过，跳过
+        if edge.to_node in visited:
+            continue
+
+        # 将该边加入结果集
+        result.append(edge)
+        visited.add(edge.to_node)
+
+        # 将新节点的所有边放入堆中
+        for next_edge in edge.to_node.edges:
+            if next_edge.to_node not in visited:
+                heapq.heappush(min_heap, (next_edge.weight, next_edge))
+
     return result
 
 
@@ -76,7 +91,5 @@ node_matrix = [
 
 # 创建图
 one_graph = graph.create_undirected_graph(node_matrix)
-graph.print_edges(one_graph)
-result = prim(one_graph)
-while result:
-    print(result.pop().value)
+
+prim(one_graph)
