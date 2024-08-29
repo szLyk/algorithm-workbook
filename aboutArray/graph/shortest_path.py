@@ -1,5 +1,3 @@
-from scipy._lib._disjoint_set import DisjointSet
-
 import create_graph as graph
 import heapq
 
@@ -22,6 +20,51 @@ import heapq
 # 复杂度：
 # 时间复杂度为 O(E log E)，E 是边的数量。
 # 并查集（Disjoint Set Union - DSU）
+
+# 并查集（Union-Find）实现
+class UnionFind:
+    def __init__(self, nodes):
+        self.parent = {}
+        self.rank = {}
+
+        for node in nodes:
+            self.parent[node] = node
+            self.rank[node] = 0
+
+    def find(self, node):
+        if self.parent[node] != node:
+            self.parent[node] = self.find(self.parent[node])  # 路径压缩
+        return self.parent[node]
+
+    def union(self, node1, node2):
+        root1 = self.find(node1)
+        root2 = self.find(node2)
+
+        if root1 != root2:
+            # 按秩合并
+            if self.rank[root1] > self.rank[root2]:
+                self.parent[root2] = root1
+            elif self.rank[root1] < self.rank[root2]:
+                self.parent[root1] = root2
+            else:
+                self.parent[root2] = root1
+                self.rank[root1] += 1
+
+
+def kruskal(graph):
+    mst = []  # 存储最小生成树的边
+    uf = UnionFind(graph.nodes.values())
+
+    # 将边按权重排序
+    sorted_edges = sorted(graph.edges, key=lambda edge: edge.weight)
+
+    # 按权重从小到大遍历边
+    for edge in sorted_edges:
+        if uf.find(edge.from_node) != uf.find(edge.to_node):
+            uf.union(edge.from_node, edge.to_node)
+            mst.append(edge)
+
+    return mst
 
 
 # Prim算法 (P算法)
@@ -95,7 +138,14 @@ node_matrix = [
 # 创建图
 one_graph = graph.create_undirected_graph(node_matrix)
 
+# result = prim(one_graph)
+# while result:
+#     edge = result.pop()
+#     print("{} -> {}".format(edge.from_node.value, edge.to_node.value))
+
+
 result = kruskal(one_graph)
+
 while result:
-    edge = result.pop()
-    print("{} -> {}".format(edge.from_node.value, edge.to_node.value))
+    value = result.pop()
+    print("{} -> {}".format(value.from_node.value, value.to_node.value))
