@@ -25,6 +25,7 @@ import heapq
 class UnionFind:
     def __init__(self, nodes):
         self.parent = {}
+        #  用于标记根节点 如果存在多条不相连的边
         self.rank = {}
 
         for node in nodes:
@@ -117,9 +118,11 @@ def prim(some_graph):
 
 
 # Dijkstra算法：适用于加权图，可以有效计算单源点到所有其他顶点的最短路径，但不支持负权重的边。
-# Bellman-Ford算法：可以处理负权重边，并且也能找出单源点到所有其他顶点的最短路径。
-# Floyd-Warshall算法：适用于求解所有顶点对之间的最短路径，使用动态规划思想，处理负权重边但不允许负权环。
-# A*算法：是一种启发式算法，通常用于路径搜索问题。
+
+
+
+
+
 
 # 示例矩阵
 node_matrix = [
@@ -133,6 +136,8 @@ node_matrix = [
     ['D', 'C', 25],
     ['D', 'E', 55],
     ['E', 'F', 35],
+
+    ['X', 'Y', 40]
 ]
 
 # 创建图
