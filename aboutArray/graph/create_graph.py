@@ -16,6 +16,9 @@ class Node:
     def get_edges(self):
         return self.edges
 
+    def __lt__(self, other):
+        return self.value < other.value
+
 
 class Edge:
 

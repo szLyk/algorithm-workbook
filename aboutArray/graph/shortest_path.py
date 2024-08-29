@@ -120,8 +120,31 @@ def prim(some_graph):
 # Dijkstra算法：适用于加权图，可以有效计算单源点到所有其他顶点的最短路径，但不支持负权重的边。
 
 
+def dijkstra(graph):
+    # 初始化距离和优先队列
+    nodes = graph.nodes.values()
+    distances = {node: float('infinity') for node in nodes}
+    one_node = next(iter(nodes))
+    distances[one_node] = 0
+    priority_queue = [(0, one_node)]  # (distance, node)
 
+    while priority_queue:
+        current_distance, current_node = heapq.heappop(priority_queue)
 
+        # 跳过已访问的节点
+        if current_distance > distances[current_node]:
+            continue
+
+        # 更新邻接节点的距离
+        for edge in current_node.edges:
+            weight = edge.weight
+            to_node = edge.to_node
+            distance = current_distance + weight
+            if distance < distances[to_node]:
+                distances[to_node] = distance
+                heapq.heappush(priority_queue, (distance, to_node))
+
+    return distances
 
 
 # 示例矩阵
@@ -149,8 +172,15 @@ one_graph = graph.create_undirected_graph(node_matrix)
 #     print("{} -> {}".format(edge.from_node.value, edge.to_node.value))
 
 
-result = kruskal(one_graph)
+# result = kruskal(one_graph)
+#
+# while result:
+#     value = result.pop()
+#     print("{} -> {}".format(value.from_node.value, value.to_node.value))
 
-while result:
-    value = result.pop()
-    print("{} -> {}".format(value.from_node.value, value.to_node.value))
+
+result = dijkstra(one_graph)
+keys = result.keys()
+for key in keys:
+    value = result.get(key)
+    print("{} -> {}".format(key.value, value))
