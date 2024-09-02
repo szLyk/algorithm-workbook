@@ -30,7 +30,7 @@
 class Node:
     def __init__(self, value):
         self.data = value
-        self.next = []
+        self.nexts = [None] * 26
         self.pre = 0
         self.end = 0
 
@@ -47,7 +47,55 @@ class Trie:
     def __init__(self):
         self.root = Node(None)
 
-
     def insert_trie(self, word):
-        for w in word:
-            letter_to_order(w)
+        current_node = self.root
+        for w in range(len(word)):
+            index = letter_to_order(word[w])
+
+            # 如果对应位置为空，创建新的节点
+            if not current_node.nexts or current_node.nexts[index] is None:
+                current_node.nexts[index] = Node(word[w])
+
+            # 移动到下一个节点
+            current_node = current_node.nexts[index]
+
+            # 记录前缀信息
+            current_node.pre += 1
+
+            # 如果是单词最后一个字母，增加结束标记
+            if w == len(word) - 1:
+                current_node.end += 1
+
+
+def search_word(trie, word):
+    current_node = trie.root
+    for w in range(len(word)):
+        index = letter_to_order(word[w])
+        if current_node.nexts[index] is None:
+            return False
+        else:
+            current_node = current_node.nexts[index]
+
+    # 检查单词结尾，确保这是一个完整的单词
+    return current_node.end > 0
+
+
+def starts_with(self, prefix: str):
+    current_node = self.root
+    for w in prefix:
+        nexts = current_node.nexts
+        index = letter_to_order(w)
+
+        if not nexts[index]:
+            return 0
+        else:
+            current_node = nexts[index]
+            return current_node.pre
+
+word = 'abcdef'
+one_trie = Trie()
+one_trie.insert_trie(word)
+print(search_word(one_trie, word))
+print(search_word(one_trie, "banana"))
+one_trie.insert_trie(word)
+print(starts_with(one_trie, "abcdef"))
