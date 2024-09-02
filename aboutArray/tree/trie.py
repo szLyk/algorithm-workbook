@@ -90,7 +90,7 @@ def starts_with(self, prefix: str):
             return 0
         else:
             current_node = nexts[index]
-            return current_node.pre
+    return current_node.pre
 
 word = 'abcdef'
 one_trie = Trie()
