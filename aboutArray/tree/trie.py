@@ -92,6 +92,7 @@ def starts_with(self, prefix: str):
             current_node = nexts[index]
     return current_node.pre
 
+
 word = 'abcdef'
 one_trie = Trie()
 one_trie.insert_trie(word)

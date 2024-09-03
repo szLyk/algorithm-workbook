@@ -17,7 +17,7 @@ class Meeting:
         return f"Meeting({self.start_time}, {self.end_time})"
 
 
-def scheduling_meetings(end_time, meetings):
+def scheduling_meetings(off_duty_time, meetings):
     # 假设 meetings 是一个包含 (start_time, end_time) 元组的列表
     meetings_list = [Meeting(start, end) for start, end in meetings]
     heapq.heapify(meetings_list)
@@ -30,8 +30,8 @@ def scheduling_meetings(end_time, meetings):
             result.append(current_meeting)
             now_time = current_meeting.end_time
             # 更新 end_time，这里假设 end_time 是一个全局结束时间
-            if current_meeting.end_time < end_time:
-                end_time = current_meeting.end_time
+            if current_meeting.end_time < off_duty_time:
+                off_duty_time = current_meeting.end_time
 
     return result
 
