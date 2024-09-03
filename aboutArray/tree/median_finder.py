@@ -1,5 +1,6 @@
 import heapq
 
+
 # 算法思想：
 #
 # 最大堆 (low) 存储较小的一半数值。
@@ -44,6 +45,7 @@ class MedianFinder:
         if len(self.low) > len(self.high):
             return -self.low[0]  # 最大堆的堆顶即为中位数
         return (-self.low[0] + self.high[0]) / 2  # 如果元素个数相同，返回两个堆顶元素的平均值
+
 
 # 使用例子
 median_finder = MedianFinder()
